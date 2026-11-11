@@ -1,5 +1,7 @@
 # MogusBio — Original Solana Devnet Release
 
+[Official website](https://mogus.store/)
+
 MogusBio is a composable digital biology protocol. This repository preserves the original Solana Devnet release candidate from October 26, 2026.
 
 - [Download the source and documentation](mogusbio-devnet-20261026-source.zip)
