@@ -1,0 +1,20 @@
+{
+  "profile": "BIO-SOLANA-V1-1",
+  "sdk": "@solana/kit@8.0.0",
+  "transactionVersion": 1,
+  "maxPacketBytes": 4096,
+  "maxInlineAccounts": 64,
+  "maxSignatures": 12,
+  "maxComputeUnits": 1400000,
+  "maxLoadedAccountBytes": 67108864,
+  "maxHeapBytes": 262144,
+  "heapPageBytes": 1024,
+  "resources": "explicit v1 message config; no legacy ComputeBudget instructions",
+  "priorityFee": "absolute lamports encoded in v1 configuration, never interpreted as micro-lamports per CU",
+  "wallet": "actual solana:signTransaction feature advertises version1 on selected chain; verify all required signatures and unchanged message bytes",
+  "rpc": "explicit trusted endpoint, exact genesis and BaseConfig, finalized/minContextSlot, bounded lossless integer JSON; successful actual v1 simulation required before launch",
+  "rpcAcceptance": "PENDING only; finalized business nonce and cache or preserved confirmed history establish business result",
+  "retry": "same business frame; blockhash may refresh only after actual nonce reconciliation; unknown submission never creates a new business operation",
+  "durability": "atomic local CAS, durable attempt before send, fsynced terminal archive before pruning; no private key storage",
+  "localTests": "do not certify a public RPC provider, wallet application or production deployment"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "biolab-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test packages/*/test/*.test.mjs test/*.test.mjs",
+    "test:core": "node --test packages/protocol-core/test/*.test.mjs",
+    "test:biology": "node --test packages/biology/test/*.test.mjs",
+    "test:settlement": "node --test packages/settlement/test/*.test.mjs",
+    "start": "node apps/server/main.mjs",
+    "native:operator": "node apps/operator/main.mjs",
+    "gateway": "node apps/gateway/main.mjs",
+    "service": "node apps/service/main.mjs",
+    "preview:auth": "node scripts/preview-auth-local.mjs --local-public-fixture",
+    "freeze:math": "node scripts/freeze-func2.mjs",
+    "freeze:source": "node scripts/freeze-source.mjs",
+    "report:economy": "node scripts/economy-report.mjs",
+    "devnet": "node apps/devnet/cli.mjs",
+    "preview:devnet": "node scripts/preview-devnet-local.mjs"
+  },
+  "dependencies": {
+    "@solana/kit": "8.0.0",
+    "@solana/rpc-spec-types": "8.0.0",
+    "@wallet-standard/app": "1.1.1"
+  }
+}

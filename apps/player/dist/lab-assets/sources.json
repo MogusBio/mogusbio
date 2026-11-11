@@ -1,0 +1,85 @@
+{
+  "profile": "BIOLAB-LAB-ASSET-SOURCES1",
+  "retrievedOn": "2026-10-26",
+  "three": {
+    "version": "0.160.0",
+    "revision": "160",
+    "upstream": "https://raw.githubusercontent.com/mrdoob/three.js/r160/build/three.module.js",
+    "upstreamSHA256": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495",
+    "upstreamBytes": 1272972,
+    "minifier": {
+      "name": "esbuild",
+      "version": "0.28.2",
+      "target": "es2020",
+      "legalComments": "inline"
+    },
+    "localSHA256": "dd285eb9d71c24939368fd6a9bcb6b8b7f272048a37be3f25eacdc9df39393fc",
+    "bytes": 667444,
+    "gzipBytes": 170948,
+    "licenseFile": "THREE-LICENSE.txt",
+    "gzipSHA256": "47982541ac5cad7bfe136cd5041602bce389a369baaf8769d13bf8e418df79b1"
+  },
+  "molecules": {
+    "file": "molecules.json",
+    "bytes": 10305,
+    "sha256": "954ce60e63d12fb1b9877f14d7abad1b3744ece2852f2fa912ba33c468ce72ba",
+    "inputs": [
+      {
+        "id": "glycine",
+        "cid": 750,
+        "source": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/750/record/JSON?record_type=3d",
+        "sourceSHA256": "1b42821c6f48ea9526d63204a9f55a84475f392933ef51de1d51a03b023b55c9",
+        "sourceBytes": 8681,
+        "coordinateType": "3D",
+        "displayAtoms": 5,
+        "displayBonds": 4,
+        "hydrogensOmitted": 5
+      },
+      {
+        "id": "atp",
+        "cid": 5957,
+        "source": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5957/record/JSON?record_type=3d",
+        "sourceSHA256": "71943e25a954e696094c7716079358f3f62519a0322edc3b80c362780b4e8cee",
+        "sourceBytes": 26732,
+        "coordinateType": "3D",
+        "displayAtoms": 31,
+        "displayBonds": 33,
+        "hydrogensOmitted": 16
+      },
+      {
+        "id": "dopc",
+        "cid": 10350317,
+        "source": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/10350317/record/JSON?record_type=2d",
+        "sourceSHA256": "bdf677da0d2e4919cd4863cbd901d57c0986e6514e010560cac67b90d86197f9",
+        "sourceBytes": 29466,
+        "coordinateType": "2D",
+        "displayAtoms": 54,
+        "displayBonds": 53,
+        "hydrogensOmitted": 84
+      },
+      {
+        "id": "glucose",
+        "cid": 5793,
+        "source": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5793/record/JSON?record_type=3d",
+        "sourceSHA256": "3556bd5a1277ab8306719f1f7330b6a2c9f600603870addad87f742be6169a33",
+        "sourceBytes": 13340,
+        "coordinateType": "3D",
+        "displayAtoms": 12,
+        "displayBonds": 12,
+        "hydrogensOmitted": 12
+      }
+    ],
+    "limitations": [
+      "DOPC CID10350317 has no PubChem3D conformer; exact official2D graph shown with z=0",
+      "Hydrogen positions omitted for clarity and performance; formula and attached counts retained",
+      "Representative structures are visualizations, not validated synthesis or metabolism"
+    ]
+  },
+  "referenceGame": {
+    "repository": "https://github.com/iifor/doodleshooter",
+    "readme": "https://raw.githubusercontent.com/iifor/doodleshooter/main/README.md",
+    "renderer": "https://raw.githubusercontent.com/iifor/doodleshooter/main/src/render.js",
+    "copiedSource": false,
+    "licenseDiscovery": "GitHub license endpoint returned404; inspiration only"
+  }
+}

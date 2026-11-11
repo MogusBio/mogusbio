@@ -1,0 +1,21 @@
+{
+  "profile": "BIOP0R2-ADMISSION-1",
+  "frameBytes": 152,
+  "baseConfigRecordBytes": 1048,
+  "baseConfigBodyBytes": 928,
+  "productionMode": 1,
+  "localPublicFixtureMode": 0,
+  "programLoader": "BPFLoaderUpgradeab1e11111111111111111111111",
+  "upgradeAuthority": null,
+  "deploymentSlot": "strictly earlier than INIT slot",
+  "initialization": "compiled Program, Bootstrap, GENESIS, deployment nonce, reviewed release and policies; exact hour seedOpen; rewardStart=seedOpen+86400",
+  "initializationWindow": "compiled initNotBefore through seedOpen inclusive",
+  "openingPolicy": "OPEN310: keep required16 bitmap and initial-set identity, additionally publish/register C310 as17th prewarm K0; native compiled frontier310 rejects old16-only sealing. All then-published K0 is ineligible for a future originality bonus.",
+  "ops": "five distinct canonical native signer keys in raw-public-key order, exactly three signatures to pay queued expenses",
+  "actorNonce": "u64LE and zero24 opId; original ExactFrame H4; latest exact replay only; no silent renumbering",
+  "authorities": "only fixed program PDAs and native signatures; no client supplied quality or unbacked material issuance",
+  "sourceBinding": "releaseHash is deterministic current source/lock/ABI/policy manifest digest, verified again before production build",
+  "elfBinding": "separate post-build external ELF SHA256 attestation; never compiled ELF self-hash",
+  "productionGate": "final same-ELF native and signed-v1 integration, actual immutable deployed binary match, complete opening, independent security review, and real selected wallet/RPC compatibility",
+  "inputValidationMeansProductionAdmission": false
+}

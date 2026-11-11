@@ -1,0 +1,62 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createPlaytestRuntime,preparePlaytestCheckpoint,restorePlaytestRuntime} from '../apps/playtest/runtime.mjs';
+
+const checkpoint=await preparePlaytestCheckpoint();
+const fresh=()=>createPlaytestRuntime({checkpoint});
+const json=x=>JSON.stringify(x);
+function decode(v){if(Array.isArray(v))return v.map(decode);if(v&&typeof v==='object'){if(v.$bio==='bigint')return BigInt(v.value);if(v.$bio==='bytes')return Buffer.from(v.value,'base64');if(v.$bio==='map')return new Map(v.value.map(([k,v])=>[decode(k),decode(v)]));if(v.$bio==='set')return new Set(v.value.map(decode));return Object.fromEntries(Object.entries(v).map(([k,v])=>[k,decode(v)]));}return v;}
+const internal=r=>decode(r.exportState().data);
+const hex=b=>Buffer.from(b).toString('hex');
+function stableInventory(r){const s=internal(r);return JSON.stringify({mints:[...s.protocol.mints],projects:[...s.protocol.projects],seasons:[...s.protocol.seasonIssued],life:[...s.protocol.lifetimeIssued]},(_,v)=>typeof v==='bigint'?v.toString():v);}
+function assertFailsUnchanged(r,request,code){const before=json(r.exportState());assert.throws(()=>r.execute(request),e=>!code||e.code===code);assert.equal(json(r.exportState()),before);}
+function listWork(r,id){return r.execute({action:'market-list',params:{assetType:'WORK',workId:id}}).lastResult.listingId;}
+
+test('market seed counterparty owns actual issued materials and P5-manufactured part; no player assets or LAB added',async()=>{
+  const r=await fresh(),s=r.snapshot(),raw=internal(r),project=raw.protocol.projects.get(raw.projectId);
+  assert.deepEqual(s.materials.map(x=>x.amount),['30','60','15','15']);assert.equal(s.works.length,60);assert.equal(s.lab.balanceAtoms,'48225840');assert.equal(s.market.counterparty.simulated,true);assert.equal(s.market.nativeExecutionVerified,false);assert.equal(s.market.materials.length,4);assert.equal(s.market.products.length,1);assert.equal(s.market.bios.length,0);
+  assert.deepEqual(project.classes.map(c=>c.issued),[90n,180n,45n,45n]);assert.deepEqual(project.classes.map(c=>c.intakeBurned),[31n,61n,16n,16n]);
+  const counterpartySources=[...raw.protocol.sources.values()].filter(x=>hex(x.inventoryOwner)===s.market.counterparty.id);assert.equal(counterpartySources.length,4);
+  const part=s.market.products[0],root=raw.protocol.settlement.roots.get(part.workId);assert.equal(root.owner,s.market.escrowOwner);assert.equal(raw.protocol.compositionRoots.get(part.workId).primitive,1);assert.equal(part.category,'PRODUCT');assert.equal(part.priceLamports,'1200000');assert.ok(s.market.invariants.testSOLConserved);
+});
+test('raw listing escrow prevents reuse; cancellation returns same tokens without issuance or money from thin air',async()=>{
+  const r=await fresh(),start=r.snapshot(),stock=stableInventory(r);let s=r.execute({action:'market-list',params:{assetType:'MATERIAL',class:1,quantity:'30'}}),id=s.lastResult.listingId;
+  assert.equal(s.materials[0].amount,'0');assert.equal(s.kits.find(k=>k.id==='kit-2').canManufacture,false);assert.equal(s.nextActions.find(x=>x.action==='manufacture-kit').enabled,false);assertFailsUnchanged(r,{action:'manufacture-kit',params:{kitId:'kit-2'}});assertFailsUnchanged(r,{action:'market-list',params:{assetType:'MATERIAL',class:1,quantity:'1'}},'MARKET_MATERIAL_BALANCE');assertFailsUnchanged(r,{action:'market-buy',params:{listingId:id}},'MARKET_SELF_TRADE');
+  s=r.execute({action:'market-cancel',params:{listingId:id}});assert.deepEqual(s.materials,start.materials);assert.equal(s.kits.find(k=>k.id==='kit-2').canManufacture,true);assert.equal(BigInt(start.testSOL.balanceLamports)-BigInt(s.testSOL.balanceLamports),0n);assert.equal(stableInventory(r),stock);assertFailsUnchanged(r,{action:'market-cancel',params:{listingId:id}},'MARKET_NOT_OPEN');
+});
+test('raw buy and explicit test-counterparty sale transfer existing units and exact test SOL once',async()=>{
+  const r=await fresh(),before=r.snapshot(),stock=stableInventory(r),offer=before.market.materials.find(x=>x.class===2);let s=r.execute({action:'market-buy',params:{listingId:offer.id}});assert.equal(s.materials[1].amount,'61');assert.equal(BigInt(before.testSOL.balanceLamports)-BigInt(s.testSOL.balanceLamports),500000n);assert.equal(BigInt(s.market.balances.counterpartyLamports)-BigInt(before.market.balances.counterpartyLamports),500000n);assertFailsUnchanged(r,{action:'market-buy',params:{listingId:offer.id}},'MARKET_NOT_OPEN');
+  s=r.execute({action:'market-list',params:{assetType:'MATERIAL',class:2,quantity:'1'}});const own=s.lastResult.listingId,player=BigInt(s.testSOL.balanceLamports),bot=BigInt(s.market.balances.counterpartyLamports);s=r.execute({action:'market-test-counterparty-buy',params:{listingId:own}});assert.equal(s.materials[1].amount,'60');assert.equal(BigInt(s.testSOL.balanceLamports)-player,500000n);assert.equal(bot-BigInt(s.market.balances.counterpartyLamports),500000n);assert.equal(stableInventory(r),stock);assertFailsUnchanged(r,{action:'market-test-counterparty-buy',params:{listingId:own}},'MARKET_NOT_OPEN');
+});
+test('purchased actual part enters owned works and can earn future ordinary LAB',async()=>{
+  const r=await fresh(),start=r.snapshot(),offer=start.market.products[0];let s=r.execute({action:'market-buy',params:{listingId:offer.id}});assert.equal(s.works.length,61);assert.ok(s.works.some(w=>w.id===offer.workId));assert.equal(BigInt(start.testSOL.balanceLamports)-BigInt(s.testSOL.balanceLamports),1200000n);s=r.execute({action:'stake',params:{workId:offer.workId}});assert.equal(s.lastResult.startHour,'339');s=r.execute({action:'advance-hour',params:{hours:2}});assert.ok(BigInt(s.lab.unclaimedAtoms)>0n);s=r.execute({action:'claim'});assert.ok(BigInt(s.lab.balanceAtoms)>BigInt(start.lab.balanceAtoms));assert.equal(s.ledgerInvariant.valid,true);
+});
+test('work escrow blocks duplicate listing, staking and parent use; cancel preserves actual unique Root',async()=>{
+  const r=await fresh(),start=r.snapshot(),part=start.works[0],id=listWork(r,part.id);let s=r.snapshot();assert.equal(s.works.length,59);assert.ok(!s.works.some(w=>w.id===part.id));const kit=s.kits.find(k=>k.id==='kit-1');assert.equal(kit.canConsume,false);assert.equal(kit.availableInputCount,59);assert.equal(kit.requiredInputCount,60);assert.ok(kit.availabilityReason);assertFailsUnchanged(r,{action:'market-list',params:{assetType:'WORK',workId:part.id}},'MARKET_WORK_OWNER');assertFailsUnchanged(r,{action:'stake',params:{workId:part.id}},'PLAYTEST_WORK_UNAVAILABLE');assertFailsUnchanged(r,{action:'synthesize-cells',params:{kitId:'kit-1'}});
+  s=r.execute({action:'market-cancel',params:{listingId:id}});assert.equal(s.works.length,60);assert.equal(s.kits.find(k=>k.id==='kit-1').canConsume,true);assert.equal(internal(r).protocol.settlement.roots.get(part.id).revision,2n);s=r.execute({action:'synthesize-cells',params:{kitId:'kit-1'}});assert.equal(s.kits[0].stage,'CELLS');assert.equal(s.counts.live,15);
+});
+test('stake and exit boundaries lock work sales; paid/unpaid historical rewards stay with old beneficiary',async()=>{
+  const r=await fresh(),part=r.snapshot().works[0];r.execute({action:'stake',params:{workId:part.id}});assertFailsUnchanged(r,{action:'market-list',params:{assetType:'WORK',workId:part.id}},'STAKE_LOCKED');r.execute({action:'advance-hour',params:{hours:2}});r.execute({action:'exit',params:{workId:part.id}});assertFailsUnchanged(r,{action:'market-list',params:{assetType:'WORK',workId:part.id}},'STAKE_LOCKED');const stopped=JSON.parse(json(r.exportState()));stopped.data.now.value=(BigInt(stopped.data.now.value)+3600n).toString();const notCranked=await restorePlaytestRuntime(stopped);assertFailsUnchanged(notCranked,{action:'market-list',params:{assetType:'WORK',workId:part.id}},'UNSETTLED_HISTORY');r.execute({action:'advance-hour',params:{hours:1}});const before=r.snapshot(),oldPositions=internal(r).protocol.settlement.intervals,id=listWork(r,part.id);let s=r.execute({action:'market-test-counterparty-buy',params:{listingId:id}});assert.ok(!s.works.some(w=>w.id===part.id));assert.equal(s.lab.unclaimedAtoms,before.lab.unclaimedAtoms);const after=internal(r).protocol.settlement.intervals;assert.deepEqual(after,oldPositions);const balance=BigInt(s.lab.balanceAtoms),unpaid=BigInt(s.lab.unclaimedAtoms);s=r.execute({action:'claim'});assert.equal(BigInt(s.lab.balanceAtoms),balance+unpaid);assert.equal(s.lab.unclaimedAtoms,'0');assertFailsUnchanged(r,{action:'claim'},'PLAYTEST_NOTHING_TO_CLAIM');assertFailsUnchanged(r,{action:'synthesize-cells',params:{kitId:'kit-1'}});
+});
+test('scope determines product versus BIO categories; cells organs and BIO transfer actual parents',async()=>{
+  const r=await fresh();let s=r.execute({action:'synthesize-cells',params:{kitId:'kit-1'}}),cell=s.works.find(w=>w.scope==='CELL'),id=listWork(r,cell.id);assert.equal(r.snapshot().market.products.find(l=>l.id===id).scope,'CELL');r.execute({action:'market-cancel',params:{listingId:id}});s=r.execute({action:'synthesize-organs',params:{kitId:'kit-1'}});const organ=s.works.find(w=>w.scope==='ORGAN');id=listWork(r,organ.id);assert.equal(r.snapshot().market.products.find(l=>l.id===id).scope,'ORGAN');r.execute({action:'market-cancel',params:{listingId:id}});s=r.execute({action:'synthesize-bio',params:{kitId:'kit-1'}});const bio=s.works.find(w=>w.scope==='BIO');id=listWork(r,bio.id);s=r.snapshot();assert.equal(s.market.bios[0].id,id);assert.equal(s.market.bios[0].category,'BIO');assert.equal(s.market.bios[0].priceLamports,'72000000');s=r.execute({action:'market-test-counterparty-buy',params:{listingId:id}});assert.equal(s.works.length,0);assert.equal(s.counts.consumed,81);assert.equal(s.lab.manufactureBurnedAtoms,'48000000');assert.equal(s.market.bios[0].status,'SOLD');assert.equal(s.ledgerInvariant.valid,true);
+});
+test('malformed fields, identities, foreign cancels, missing funds and material are atomic failures',async()=>{
+  const r=await fresh(),offer=r.snapshot().market.products[0];for(const request of [
+    {action:'market-cancel',params:{listingId:offer.id}},
+    {action:'market-test-counterparty-buy',params:{listingId:offer.id}},
+    {action:'market-list',params:{assetType:'MATERIAL',class:1,quantity:'01'}},
+    {action:'market-list',params:{assetType:'MATERIAL',class:1,quantity:'1001'}},
+    {action:'market-list',params:{assetType:'MATERIAL',class:1,quantity:1}},
+    {action:'market-list',params:{assetType:'MATERIAL',class:1,workId:offer.workId}},
+    {action:'market-list',params:{assetType:'WORK',workId:r.snapshot().works[0].id,category:'BIO'}},
+    {action:'market-buy',params:{listingId:offer.id,priceLamports:'1'}},
+    {action:'market-buy',params:{listingId:'x'}}])assertFailsUnchanged(r,request);
+  const cp=JSON.parse(json(r.exportState())),data=decode(cp.data),actor=r.snapshot().account.id,other=r.snapshot().market.counterparty.id,lamports=cp.data.protocol.lamports.value,old=data.protocol.lamports.get(actor);for(const [id,amount]of lamports){if(id===actor)amount.value='0';if(id===other)amount.value=(data.protocol.lamports.get(other)+old).toString();}const poor=await restorePlaytestRuntime(cp);assertFailsUnchanged(poor,{action:'market-buy',params:{listingId:offer.id}},'MARKET_FUNDS');
+});
+test('market checkpoint restores locked ownership; old pre-market checkpoints migrate once; reset stays isolated',async()=>{
+  const r=await fresh(),part=r.snapshot().works[0],id=listWork(r,part.id),restored=await restorePlaytestRuntime(JSON.parse(json(r.exportState())));assert.deepEqual(restored.snapshot(),r.snapshot());restored.execute({action:'market-cancel',params:{listingId:id}});assert.equal(r.snapshot().works.length,59);assert.equal((await fresh()).snapshot().works.length,60);
+  // The cached prepared template deliberately retains the original pre-market
+  // schema. Restore migrates a detached clone exactly once, never the template.
+  assert.equal(decode(checkpoint.data).market,undefined);const old=await restorePlaytestRuntime(JSON.parse(json(checkpoint))),before=stableInventory(old),once=await restorePlaytestRuntime(old.exportState()),twice=await restorePlaytestRuntime(once.exportState());assert.equal(stableInventory(twice),before);assert.equal(twice.snapshot().market.listings.length,5);assert.deepEqual(twice.snapshot(),old.snapshot());assert.ok(Buffer.byteLength(json(twice.exportState()))<12*1024*1024);assert.ok(Buffer.byteLength(json(twice.snapshot()))<256*1024);
+});

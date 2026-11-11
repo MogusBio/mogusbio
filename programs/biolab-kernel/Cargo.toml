@@ -1,0 +1,25 @@
+[package]
+name = "biolab-kernel"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[lib]
+name = "biolab_kernel"
+crate-type = ["cdylib","rlib"]
+
+[features]
+no-entrypoint = []
+
+[dependencies]
+solana-program = "=3.0.0"
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1
+
+[package.metadata.solana]
+tools-version = "v1.56"

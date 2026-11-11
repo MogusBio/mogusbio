@@ -1,0 +1,18 @@
+[package]
+name = "biolab-feasibility-probe-harness"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+mollusk-svm = "=0.16.2"
+sha2 = "=0.10.9"
+solana-account = "4"
+solana-instruction = "3"
+solana-pubkey = "4"
+
+[[test]]
+name = "sbf_budget"
+path = "../tests/sbf_budget.rs"

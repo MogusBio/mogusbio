@@ -1,0 +1,25 @@
+//! SDK-generated official Kit instruction bytes and account roles execute the
+//! real native SBF program. This is not a hand-transliterated payload test.
+mod support;
+use support::*;
+#[path="support/mining.rs"]mod mining;
+fn bytes(s:&str)->Vec<u8>{assert_eq!(s.len()%2,0);(0..s.len()).step_by(2).map(|i|u8::from_str_radix(&s[i..i+2],16).unwrap()).collect()}
+fn sdk_buy(n:u64,id:[u8;32],class:u8,quantity:u64)->Instruction{
+ let out=std::process::Command::new("node").arg(std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tools/sdk-native-bridge.mjs")).args(["buy",&n.to_string(),&id.iter().map(|b|format!("{b:02x}")).collect::<String>(),&class.to_string(),&quantity.to_string()]).output().unwrap();assert!(out.status.success(),"{}",String::from_utf8_lossy(&out.stderr));let text=String::from_utf8(out.stdout).unwrap();let mut lines=text.lines();let data=bytes(lines.next().unwrap());let accounts=lines.map(|line|{let mut r=line.split(',');let key=Pubkey::new_from_array(bytes(r.next().unwrap()).try_into().unwrap());let w=r.next()==Some("1");let s=r.next()==Some("1");assert!(r.next().is_none());if w{AccountMeta::new(key,s)}else{AccountMeta::new_readonly(key,s)}}).collect();Instruction{program_id:PROGRAM,accounts,data}
+}
+#[test]
+#[ignore="requires production-fixture and matching current public-release ABI/SBF"]
+fn sdk_four_class_purchases_deliver_correct_accounts_and_retry_without_reissuance(){
+ assert!(cfg!(feature="production-fixture"));let vm=runtime();let mut a=launched(&vm);let id=project_id(1);let initial_ops=account(&a,pda(b"ops")).lamports;
+ for class in 1..=4{prepare_buy(&mut a,id,class,0,BOOT);let ix=sdk_buy(next_nonce(&a,BOOT),id,class,3);assert_eq!(ix.accounts.len(),16);assert_eq!(ix.accounts[11].pubkey,season_address(class,0));assert_eq!(ix.accounts[12].pubkey,lifetime_address(class));assert_eq!(ix.accounts[13].pubkey,pda(b"ops"));assert_eq!(ix.accounts[14].pubkey,ata(&material_address(&id,class,false),&BOOT));let before=a.clone();let mut wrong=ix.clone();wrong.accounts.swap(11,14);let rejected=vm.process_instruction(&wrong,&a);assert!(rejected.raw_result.is_err());assert_eq!(rejected.resulting_accounts,before);
+ let r=vm.process_instruction(&ix,&a);println!("SDK_NATIVE_REAL_BUY class={class} cu={} raw={:?}",r.compute_units_consumed,r.raw_result);assert_eq!(r.raw_result,Ok(()));a=r.resulting_accounts;assert_eq!(read64(&account(&a,material_address(&id,class,false)).data,36),3);assert_eq!(read64(&account(&a,ata(&material_address(&id,class,false),&BOOT)).data,64),3);let repeated=vm.process_instruction(&ix,&a);assert_eq!(repeated.raw_result,Ok(()));assert_eq!(repeated.resulting_accounts,a);}
+ assert_eq!(account(&a,pda(b"ops")).lamports,initial_ops+1_200_000);assert_eq!(read64(&account(&a,pda(b"lab-mint")).data,36),N);
+}
+
+#[test]
+#[ignore="requires production-fixture and matching current public-release ABI/SBF"]
+fn sdk_materialize_requires_writable_actual_rootreg_and_preserves_atomicity(){
+ assert!(cfg!(feature="production-fixture"));let mut vm=runtime();let(a,id)=manufactured(&vm);let mut a=mining::stake(&vm,a,id,BOOT,BOOT);let start=mining::local_start(&a);clock_at(&mut vm,&mut a,start+2*3600+1);a=mining::settle_through(&vm,a,1);a=mining::apply_pending_events(&vm,a,1);let seq=read64(&account(&a,pda(b"mining")).data,168);add_empty(&mut a,mining::event_key(seq));add_empty(&mut a,mining::hour(1));let open=mining::open_ix(&a,1);a=mining::execute(&vm,a,open);
+ let out=std::process::Command::new("node").arg(std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tools/sdk-native-bridge.mjs")).args(["materialize",&next_nonce(&a,BOOT).to_string(),"1","0","0","0",&id.to_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()]).output().unwrap();assert!(out.status.success(),"{}",String::from_utf8_lossy(&out.stderr));let text=String::from_utf8(out.stdout).unwrap();let mut lines=text.lines();let data=bytes(lines.next().unwrap());let accounts=lines.map(|line|{let r:Vec<_>=line.split(',').collect();let key=Pubkey::new_from_array(bytes(r[0]).try_into().unwrap());if r[1]=="1"{AccountMeta::new(key,r[2]=="1")}else{AccountMeta::new_readonly(key,r[2]=="1")}}).collect();let ix=Instruction{program_id:PROGRAM,accounts,data};assert_eq!(ix.accounts.len(),17);assert_eq!(ix.accounts[15].pubkey,mining::root_reg(id));assert!(ix.accounts[15].is_writable);
+ let mut readonly=ix.clone();readonly.accounts[15].is_writable=false;let rejected=vm.process_instruction(&readonly,&a);assert!(rejected.raw_result.is_err());assert_eq!(rejected.resulting_accounts,a);let r=vm.process_instruction(&ix,&a);println!("SDK_NATIVE_REAL_MATERIALIZE cu={} raw={:?}",r.compute_units_consumed,r.raw_result);assert_eq!(r.raw_result,Ok(()));a=r.resulting_accounts;assert_eq!(account(&a,mining::hour(1)).data[160],4);assert!(read64(&account(&a,mining::position(id,0)).data,351)>0);assert_eq!(read64(&account(&a,pda(b"lab-mint")).data,36),N);let repeated=vm.process_instruction(&ix,&a);assert_eq!(repeated.raw_result,Ok(()));assert_eq!(repeated.resulting_accounts,a);
+}

@@ -1,0 +1,153 @@
+{
+  "schema": 2,
+  "monetaryPromise": false,
+  "totalAtoms": "100000000000000",
+  "totalLAB": "100000000.000000",
+  "decimals": 6,
+  "allocatedAtoms": "99999999999983",
+  "genesisSealedAtoms": "17",
+  "halvingHours": "35040",
+  "rewardEndHour": "1611840",
+  "firstEpochBudgetLAB": "50000000.000000",
+  "rawStandardUnitsPerBio": [
+    "30",
+    "60",
+    "15",
+    "15"
+  ],
+  "materialLedger": {
+    "standardUnits": "120",
+    "initialSpeciesTicks": "1140000",
+    "spentSpeciesTicks": "840000",
+    "remainingSpeciesTicks": "300000",
+    "initialCreditInt": "14400000",
+    "spentCreditInt": "9900000",
+    "remainingCreditInt": "4500000",
+    "effectiveCreditInt": "7200000",
+    "retiredCreditInt": "2700000",
+    "tickScale": "1000 ticks per species unit",
+    "creditScale": "1000 creditInt per RU",
+    "warning": "1140 species units are not1140 RU. Standard material tokens, species ticks, weighted RU and LAB are distinct units."
+  },
+  "seasonCaps": [
+    "50000",
+    "100000",
+    "25000",
+    "25000"
+  ],
+  "lifetimeCaps": [
+    "5000000",
+    "10000000",
+    "2500000",
+    "2500000"
+  ],
+  "maximumBioPerSeason": "1666",
+  "maximumBioFromLifetimeIssue": "166666",
+  "resourceFeePerBioLamports": "12000000",
+  "labCreationFeeLamports": "10000000",
+  "manufacturingBurnLAB": "48.000000",
+  "floorWeight": "288000000000000000",
+  "ordinaryBioWeight": "95040000000000",
+  "uniqueKWeight": "77760000000000",
+  "ordinaryBiosToReachFloor": "3031",
+  "dailyScenarios": {
+    "noParticipants": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "0",
+      "distributedLAB": "0.000000",
+      "sealedResidualAtoms": "34246575342",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "0.000000"
+    },
+    "oneComponent": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "57072",
+      "distributedLAB": "0.057072",
+      "sealedResidualAtoms": "34246518270",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "0.057072"
+    },
+    "oneQ2Cell": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "376704",
+      "distributedLAB": "0.376704",
+      "sealedResidualAtoms": "34246198638",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "0.376704"
+    },
+    "sixtySeparateComponents": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "3424320",
+      "distributedLAB": "3.424320",
+      "sealedResidualAtoms": "34243151022",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "0.057072"
+    },
+    "oneQ2Bio": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "11301360",
+      "distributedLAB": "11.301360",
+      "sealedResidualAtoms": "34235273982",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "11.301360"
+    },
+    "oneValidChampionBio": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "20547936",
+      "distributedLAB": "20.547936",
+      "sealedResidualAtoms": "34226027406",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "20.547936"
+    },
+    "firstSeasonAllRawMadeIntoBio": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "18828065760",
+      "distributedLAB": "18828.065760",
+      "sealedResidualAtoms": "15418509582",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "11.301360"
+    },
+    "secondSeasonSameCapacity": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "34246535904",
+      "distributedLAB": "34246.535904",
+      "sealedResidualAtoms": "39438",
+      "denominator": "316673280000000000",
+      "firstRootLAB": "10.278072"
+    },
+    "tenThousandBios": {
+      "budgetAtoms": "34246575342",
+      "budgetLAB": "34246.575342",
+      "distributedAtoms": "34246560000",
+      "distributedLAB": "34246.560000",
+      "sealedResidualAtoms": "15342",
+      "denominator": "950400000000000000",
+      "firstRootLAB": "3.424656"
+    },
+    "afterFirstHalvingOneBio": {
+      "budgetAtoms": "17123287671",
+      "budgetLAB": "17123.287671",
+      "distributedAtoms": "5650680",
+      "distributedLAB": "5.650680",
+      "sealedResidualAtoms": "17117636991",
+      "denominator": "288000000000000000",
+      "firstRootLAB": "5.650680"
+    }
+  },
+  "notes": [
+    "Individual asset rewards floor once per hour; same-root ordinary and unique K combine before that floor.",
+    "A score improvement alone never creates material, extra ordinary assets or a second K.",
+    "These are fixed-roster accounting scenarios, not guaranteed income, price assumptions or participation forecasts.",
+    "After complete hourly allocation, unassigned residual and floor dust stay sealed; unfinished lazy snapshots retain their unallocated Pending budget. Neither creates a new wallet or later-hour entitlement.",
+    "Issued material consumed into Source inventory cannot be reminted, unpacked or recovered from a finished asset.",
+    "This arithmetic report does not price transaction fees, rent, SOL, LAB or third-party sale revenue."
+  ]
+}

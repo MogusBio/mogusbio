@@ -1,0 +1,33 @@
+[package]
+name = "biolab-economy"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[lib]
+name = "biolab_economy"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["acceptance-test", "custom-heap"]
+acceptance-test = []
+production-admission = []
+local-public-fixture = ["production-admission"]
+custom-heap = []
+no-entrypoint = []
+historical-opening14 = []
+
+[dependencies]
+solana-program = "=3.0.0"
+biolab-kernel = { path = "../biolab-kernel", features = ["no-entrypoint"] }
+sha2 = { version = "=0.10.9", default-features = false, features = ["compress"] }
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1
+
+[package.metadata.solana]
+tools-version = "v1.56"

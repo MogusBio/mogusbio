@@ -1,0 +1,2117 @@
+{
+  "profile": "BIOP0R2",
+  "wireVersion": 2,
+  "frameHeaderBytes": 152,
+  "frameMaxBytes": 4096,
+  "nonce": "opId=u64LE||zero24; H3 actor scoped; H4 exact original frame; latest-only replay",
+  "prefix": [
+    {
+      "role": "actor",
+      "writable": true,
+      "signer": true
+    },
+    {
+      "role": "ActorNonce",
+      "writable": true,
+      "signer": false
+    },
+    {
+      "role": "RuntimeEconConfig",
+      "writable": false,
+      "signer": false
+    },
+    {
+      "role": "Instructions",
+      "writable": false,
+      "signer": false
+    },
+    {
+      "role": "SystemProgram",
+      "writable": false,
+      "signer": false
+    },
+    {
+      "role": "ClassicToken",
+      "writable": false,
+      "signer": false
+    },
+    {
+      "role": "Clock",
+      "writable": false,
+      "signer": false
+    },
+    {
+      "role": "BaseConfig",
+      "writable": false,
+      "signer": false
+    }
+  ],
+  "initPrefixOverrides": {
+    "RuntimeEconConfig": "writable",
+    "BaseConfig": "writable"
+  },
+  "retryPrefixCount": 4,
+  "indexRule": "public prefix8; normalized prefix7 removes BaseConfig. normalized suffix index>=7 maps +1; INIT public suffix Mint/Reserve/Auth/Treasury/Program/ProgramData with prefix Base then private normalized Base moved behind Treasury",
+  "unknownSchema": "reject",
+  "productionDisabledNativeOpcodes": [
+    2
+  ],
+  "operations": [
+    {
+      "module": 1,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 1,
+      "name": "INIT",
+      "payloadBytes": 40,
+      "resultBytes": 72,
+      "normalizedSuffix": [
+        {
+          "role": "labMint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "labReserve",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "labAuthority",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "BaseConfig",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Program",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "ProgramData",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/initialize.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "labMint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "labReserve",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "labAuthority",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Program",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "ProgramData",
+          "writable": false,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 201,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 4,
+      "name": "CREATE_PROJECT",
+      "payloadBytes": {
+        "min": 217,
+        "max": 280
+      },
+      "resultBytes": 208,
+      "normalizedSuffix": [
+        {
+          "role": "Project",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AA_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NUC_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LIPID_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "SUGAR_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AA_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NUC_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LIPID_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "SUGAR_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append unique wallet table sorted by raw pubkey for non-prefix seller, feePayer, rentPayer. Payload roles define native signatures; alias to actor uses actor once. Name length u32@144 must1..64 and payload=216+nameLen.",
+      "source": "src/launchpad.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Project",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AA_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NUC_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LIPID_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "SUGAR_Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AA_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NUC_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LIPID_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "SUGAR_Auth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 202,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 5,
+      "name": "BUY_MATERIAL",
+      "payloadBytes": 300,
+      "resultBytes": 58,
+      "normalizedSuffix": [
+        {
+          "role": "Project",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "PackAuthority",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "SeasonQuota",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LifetimeQuota",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Destination",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AssociatedTokenProgram",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append unique wallet table sorted raw pubkey for non-prefix payer/recipient/seller/rentPayer. Quantity1..1000; payer/rentPayer signatures, passive recipient/seller no implicit signature. Destination mode exact0/1.",
+      "source": "src/launchpad.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Project",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Mint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "PackAuthority",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "SeasonQuota",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LifetimeQuota",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Destination",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AssociatedTokenProgram",
+          "writable": false,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 301,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 6,
+      "name": "QUEUE_OPS",
+      "payloadBytes": 168,
+      "resultBytes": 56,
+      "normalizedSuffix": [
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Expense",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append unique wallet roles recipient/rentPayer sorted raw pubkey, skip actor. Actor must one approved Ops member.",
+      "source": "src/ops.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Expense",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 301,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 7,
+      "name": "PAY_OPS",
+      "payloadBytes": 203,
+      "resultBytes": 64,
+      "normalizedSuffix": [
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Expense",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append unique wallet table recipient/rentPayer/three selected Ops sorted raw pubkey, skip actor. Selected indices@160..163 strictly ascending, exactly3 native signatures.",
+      "source": "src/ops.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "OpsVault",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Expense",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 401,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 9,
+      "name": "ARTIFACT_PUT",
+      "payloadBytes": {
+        "min": 61,
+        "max": 1084
+      },
+      "resultBytes": 45,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/verification.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "constraints": "payload=60+chunkLen. chunkLen1..1024; offset canonical written, non-final chunks exactly1024. Append-only shared Artifact. Initial chunk allocates, sealed content immutable."
+    },
+    {
+      "module": 401,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 10,
+      "name": "ARTIFACT_SEAL",
+      "payloadBytes": 50,
+      "resultBytes": 76,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/verification.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 501,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 8,
+      "name": "MANUFACTURE_PART",
+      "payloadBytes": 76,
+      "resultBytes": 108,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NewRoot",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "From sealed MaterialPlan: sorted unique projectId Project[w] list; sorted unique (projectId,class) Mint[w] list; TokenSource[w] per canonical Intake order; sorted unique union(existing debit sourceId,new intake sourceId) Source[w] list (<=32); then unique raw-pubkey sorted wallet role table (rentPayer/intake owners) excluding actor. Intake owners native signer; rentPayer native signer. Project is writable to track actual material burns. component::make exact table indices9+.",
+      "source": "src/component.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NewRoot",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 602,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 11,
+      "name": "VERIFY_BEGIN",
+      "payloadBytes": 88,
+      "resultBytes": 80,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append Direct Root[r] in exact payload Direct order; target determines4/2..4/6 accounts. No client-q.",
+      "source": "src/verification.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 602,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 12,
+      "name": "VERIFY_STEP",
+      "payloadBytes": 84,
+      "resultBytes": 80,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Phase0 only append current DirectRoot[r],its actual source Artifact[r]; other phases no suffix. State controls phase/work count.",
+      "source": "src/verification.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 701,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 13,
+      "name": "SYNTH_FINALIZE",
+      "payloadBytes": {
+        "oneOf": [
+          124,
+          189
+        ]
+      },
+      "resultBytes": 156,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NewRoot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABMint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABSource",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Only lengths124(mode0) or189(mode1 with byte124=1). Append n DirectRoot[w], n corresponding RootReg[w] in canonical Direct order; append Task/Round/Disclosure; q2 BIO add Knowledge/KSlot; existing K adds actual Act/RR/Position/Root and potential stopEvent dedup; mode1 then Snapshot[r]/Commit[w]/Candidate[w]. No other length.",
+      "source": "src/synthesis.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NewRoot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABMint",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABSource",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1001,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 20,
+      "name": "REGISTER_ORDINARY",
+      "payloadBytes": 96,
+      "resultBytes": 64,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Directory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NewPosition",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentHour",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "If re-registering append previousPosition[r]. Then new ordinary START Event[w]. CurrentHour pointer binds exact Registry.nextHour; no arbitrary currentHour.",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Directory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NewPosition",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentHour",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1001,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 21,
+      "name": "EXIT_ORDINARY",
+      "payloadBytes": 56,
+      "resultBytes": 40,
+      "normalizedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "OrdinaryEndEvent",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "If actual K OPEN append Task[w]/KSlot[w]/Activation[w]/KEndEvent[w]; OrdinaryEndEvent must queueIndex+1, KEndEvent queueIndex. Without K exactly fixed suffix. Both maxRent summed once.",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "OrdinaryEndEvent",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1001,
+      "opcode": 3,
+      "schema": 2,
+      "nativeOpcode": 26,
+      "name": "TRANSFER_ROOT",
+      "payloadBytes": 88,
+      "resultBytes": 72,
+      "normalizedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1101,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 22,
+      "name": "SYNC_EMISSION",
+      "payloadBytes": 8,
+      "resultBytes": 8,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1102,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 23,
+      "name": "OPEN_HOUR",
+      "payloadBytes": 16,
+      "resultBytes": 24,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NextEvent",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "NextEvent",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "constraints": "Creates kind18/schema4 body362/record482 with lazy0; complete due Event frontier freezes exact member count, ordinary/K totals, same-root K identity and denominator. Old schema3 is read only by sequential settlement; it is never rewritten as schema4."
+    },
+    {
+      "module": 1102,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 24,
+      "name": "APPLY_EVENT",
+      "payloadBytes": 24,
+      "resultBytes": 8,
+      "normalizedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Event",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Directory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Event kind0 append activeTail Directory[w] iff notMAX; kind1 append prev/next Directory[w] iff notMAX; kind2/3 append actual Activation[r]. No historical-root scan.",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Event",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Directory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": false,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1102,
+      "opcode": 3,
+      "schema": 2,
+      "nativeOpcode": 28,
+      "name": "EMPTY_SKIP",
+      "payloadBytes": 24,
+      "resultBytes": 24,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentHour",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NextEvent",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentHour",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NextEvent",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "constraints": "none; expectedNextHour and targetExclusive are checked against the complete queue head and cached empty active/K state; CurrentHour must be canonical and fresh; no live hour or due event may be skipped."
+    },
+    {
+      "module": 1102,
+      "opcode": 4,
+      "schema": 2,
+      "nativeOpcode": 29,
+      "name": "ADVANCE_FROZEN_HOUR",
+      "payloadBytes": 16,
+      "resultBytes": 16,
+      "normalizedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "constraints": "hour:u64,maxRent:u64. Requires actual mature current READY/PARTIAL Hour kind18/schema4 (482 bytes), lazy0; marks lazy1 and advances only Registry freeze frontier. No Treasury/Token accounts or balance movement. Schema3 remains sequential-only."
+    },
+    {
+      "module": 1201,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 25,
+      "name": "MATERIALIZE_HOUR",
+      "payloadBytes": 32,
+      "resultBytes": 33,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "For nonempty Hour append exactly Directory[r]/RootReg[w]/Position[w]. Sequential mode binds frozen nextDirectory; schema4 lazy1 accepts any actual eligible historical Position and canonical Directory identity, independent of current active links. expectedCursor is always the Hour processed-count CAS. Empty Hour has no suffix. Position own nextUnsettled and RootReg.coverageSeq bind one award; beneficiary is immutable.",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1201,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 27,
+      "name": "CLOSE_FINAL_HOUR",
+      "payloadBytes": 16,
+      "resultBytes": 80,
+      "normalizedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append saved originalPayer[w] iff different from actor; otherwise refund actor prefix0. Exact9/10 normalized accounts. Never refund cranker by choice.",
+      "source": "src/settlement.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Hour",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1203,
+      "opcode": 1,
+      "schema": 1,
+      "nativeOpcode": 3,
+      "name": "CLAIM_POSITION",
+      "payloadBytes": 120,
+      "resultBytes": 88,
+      "normalizedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Destination",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/position.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "LABMint",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "LABReserve",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "LABAuth",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Treasury",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Position",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Destination",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 901,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 30,
+      "name": "BLUEPRINT_BEGIN",
+      "payloadBytes": 84,
+      "resultBytes": 133,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 901,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 31,
+      "name": "BLUEPRINT_STEP",
+      "payloadBytes": 84,
+      "resultBytes": 133,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 901,
+      "opcode": 3,
+      "schema": 2,
+      "nativeOpcode": 32,
+      "name": "REGISTER_SEED",
+      "payloadBytes": 84,
+      "resultBytes": 72,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Opening",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Seed",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Disclosure",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Knowledge",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Opening",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Seed",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Disclosure",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Knowledge",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 901,
+      "opcode": 4,
+      "schema": 2,
+      "nativeOpcode": 33,
+      "name": "SEAL_OPENING",
+      "payloadBytes": 17,
+      "resultBytes": 49,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Opening",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Snapshot",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append at most8 contiguous (Knowledge[r],Seed[r]) pairs, cursor/maxScan exact.",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Opening",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Snapshot",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1002,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 34,
+      "name": "COMMIT",
+      "payloadBytes": 116,
+      "resultBytes": 40,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Snapshot",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Round",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Commit",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Snapshot",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Round",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Commit",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1002,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 35,
+      "name": "FINALIZE_ROUND",
+      "payloadBytes": 102,
+      "resultBytes": 124,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Round",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Phase0 no suffix; BASELINE up to8 Knowledge[r] contiguous; CANDIDATES Candidate/Commit/Disclosure/ownKnowledge + full contiguous chunk excluding own alias; READY winner adds Candidate/Commit/ownKnowledge/NewWinner/Root/RootReg and, only actual-eligible, Position/NewActivation/KHistory/Registry/Event/oldActivation(if exists). Complete-source code defines each state. Round schema2 locks scanCount@381 on epoch reset; BASELINE/CANDIDATE scan entire0..scanCount, each accepted correction Knowledge(kind2) immediately followed by its authoritative Safety20/2[r] unless same account already present. Effective origin anchor filters old start/deadline prefixes; late ordinary entries are scanned but excluded. Safety body321/total441; Round body389/total509.",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Round",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1002,
+      "opcode": 3,
+      "schema": 2,
+      "nativeOpcode": 36,
+      "name": "ACTIVATE_WINNER",
+      "payloadBytes": 48,
+      "resultBytes": 48,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Winner",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Ordinary",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Activation",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KHistory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Event",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Append oldActivation[r] iff KSlot has historical ref. Start future hour only.",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Winner",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Root",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "RootReg",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Ordinary",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Activation",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KHistory",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Event",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1003,
+      "opcode": 1,
+      "schema": 2,
+      "nativeOpcode": 37,
+      "name": "HISTORICAL_REPLAY_BEGIN",
+      "payloadBytes": 117,
+      "resultBytes": 133,
+      "normalizedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AcceptedBase",
+          "writable": false,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "AcceptedBase",
+          "writable": false,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1003,
+      "opcode": 2,
+      "schema": 2,
+      "nativeOpcode": 38,
+      "name": "PROVE_TASK_FAULT",
+      "payloadBytes": 160,
+      "resultBytes": 58,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Knowledge",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "AcceptedBase",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NewSafety",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentRound",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "Qualified PASS adds NewCorrectedKnowledge[w]/canonicalDisclosure[w]. Correction-kind target adds priorSafety[r] if not already present. Faulted realRoot adds realRR[w], and iff ordinary OPEN Position[w]/OrdEND[w]. Current K adds Act[w]/RR[w]/associatedPosition[r]/Root[r]/KEND[w], dedup previous accounts. UNKNOWN refuses, VM traps roll back. Safety schema2 appends immutable originKnowledgeIndex@313; same-H7 corrections inherit the actual validated earlier Safety origin only if an existing canonical H8 firstEvent is strictly before the old qualifiedEvent; fresh H8, changed H7 or later/equal disclosure anchors at the new correctedIndex. Actual times are not backdated.",
+      "source": "src/originality_safety.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Knowledge",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Artifact",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "Verification",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "AcceptedBase",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "role": "NewSafety",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "CurrentRound",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1003,
+      "opcode": 3,
+      "schema": 2,
+      "nativeOpcode": 39,
+      "name": "AUDIT_NEXT",
+      "payloadBytes": 92,
+      "resultBytes": 66,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Safety",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "If cursor<target append Knowledge[r]; INVALID adds referencedSafety[r] unless same currentSafety. Accepted adds Verification[r]/Artifact[r]/AcceptedBase[r]/canonicalDisclosure[r]; correction-kind adds priorSafety[r] iff different currentSafety. Cursor==target no suffix.",
+      "source": "src/originality_safety.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Safety",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    },
+    {
+      "module": 1003,
+      "opcode": 4,
+      "schema": 2,
+      "nativeOpcode": 40,
+      "name": "RECOVER_TASK",
+      "payloadBytes": 92,
+      "resultBytes": 64,
+      "normalizedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Safety",
+          "writable": true,
+          "signer": false
+        }
+      ],
+      "dynamicAccounts": "none",
+      "source": "src/originality_safety.rs",
+      "publicFixedSuffix": [
+        {
+          "role": "Task",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "KSlot",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Registry",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "role": "Safety",
+          "writable": true,
+          "signer": false
+        }
+      ]
+    }
+  ],
+  "settlementProfile": "ECON4-R1: Hour18/schema4 appended lazy flag, independent freeze frontier and own historical per-hour debt; old Hour3 sequential compatibility only"
+}

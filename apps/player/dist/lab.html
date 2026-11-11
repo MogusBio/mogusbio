@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f8f7ed">
+  <meta name="description" content="An interactive biology laboratory. Explore molecular structures, assemble an experiment and inspect anatomy in three dimensions.">
+  <title>MogusBio — Your living laboratory</title>
+  <link rel="stylesheet" href="/lab.css">
+  <link rel="stylesheet" href="/lab-ops.css">
+  <link rel="stylesheet" href="/lab-devnet.css">
+  <link rel="stylesheet" href="/lab-designer.css">
+  <link rel="stylesheet" href="/lab-market.css">
+  <script type="module" src="/lab.js"></script>
+</head>
+<body class="lab-page">
+  <header class="lab-header">
+    <a class="lab-brand" href="/lab" aria-label="MogusBio laboratory home">
+      <img class="lab-brand-mark" src="/lab-assets/mogusbio-logo.png" alt="" width="44" height="44">
+      <span class="lab-brand-word">Mogus<span>Bio</span></span>
+    </a>
+    <span class="lab-brand-description">LIVING IDEAS.<br>REAL EXPERIMENTS.</span>
+    <div class="lab-session"><span class="lab-signal" aria-hidden="true"></span><span id="lab-network-label">Devnet · test tokens</span></div>
+    <label class="lab-network-picker"><span>Network</span><select id="lab-network" aria-label="Laboratory network"><option value="devnet">Solana Devnet</option><option value="simulation">Local simulation</option></select></label>
+    <div class="lab-header-actions">
+      <span id="lab-performance" class="lab-performance">CALIBRATING</span>
+      <button id="lab-quality" class="lab-icon-button" type="button" aria-label="Change visual quality" title="Change visual quality"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14M7 3v4M13 8v4M8 13v4"/></svg><span>Auto</span></button>
+      <div id="lab-account-stats" class="lab-account-stats" aria-label="Devnet wallet balances"><span><b id="lab-account-balance">—</b><small>TEST LAB</small></span><i></i><span><b id="lab-account-sol">—</b><small>TEST SOL</small></span></div>
+      <button id="lab-account-button" class="lab-account-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="6" r="3"/><path d="M4 17v-2a6 6 0 0 1 12 0v2"/></svg><span>Connect Devnet wallet</span></button>
+      <button id="lab-open-notebook" aria-label="Open field notes" class="lab-notebook-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3h11v14H5zM3 6h4M3 10h4M3 14h4M10 7h3M10 11h3"/></svg><span>Field notes</span><span class="lab-keycap" aria-hidden="true">N</span></button>
+    </div>
+  </header>
+
+    <section id="lab-journey" class="lab-journey" aria-label="Your first construction">
+      <div class="lab-journey-heading"><span id="lab-guide-step">YOUR FIRST EXPERIMENT</span><small>One step at a time</small></div>
+      <h2 id="lab-guide-title">Make your first functional component.</h2>
+      <p id="lab-guide-body">Get four materials, manufacture one specimen, then stake it to try earning test LAB. Nothing is built automatically.</p>
+      <ol><li class="active" data-journey-step="account" aria-current="step"><span>01</span>Start</li><li data-journey-step="supplies"><span>02</span>Buy</li><li data-journey-step="design"><span>03</span>Design</li><li data-journey-step="workshop"><span>04</span>Make</li><li data-journey-step="assembly"><span>05</span>Assemble</li><li data-journey-step="energy"><span>06</span>Stake</li><li data-journey-step="claim"><span>07</span>Claim</li></ol>
+      <button id="lab-journey-next" type="button">Connect a wallet <span aria-hidden="true">→</span></button>
+    </section>
+
+
+  <div class="lab-chamber">
+  <canvas id="lab-canvas" tabindex="0" aria-label="Interactive three-dimensional biology laboratory" aria-describedby="lab-help">
+    Explore molecules and specimens using the laboratory controls.
+  </canvas>
+  <div class="lab-vignette" aria-hidden="true"></div>
+
+  </div>
+
+  <div id="lab-hotspots" class="lab-hotspots" aria-label="Instruments in the laboratory"></div>
+
+  <main class="lab-overlay" aria-label="Laboratory workspace">
+    <aside class="lab-navigation" aria-label="Your laboratory navigation. Scroll for all activities." tabindex="0">
+    <nav class="lab-stations" aria-label="Laboratory stations">
+      <span class="lab-rail-caption">OBSERVE</span>
+      <button class="lab-station active" type="button" data-station="synthesis" aria-label="Synthesis chamber" aria-pressed="true"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M10 3h8M12 3v7L5 22a2 2 0 0 0 2 3h14a2 2 0 0 0 2-3l-7-12V3M9 18h10"/><circle cx="13" cy="20" r="1"/></svg><span>Synthesis</span><small>01</small></button>
+      <button class="lab-station" type="button" data-station="microscope" aria-label="Microscope station" aria-pressed="false"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="m13 4 5 3-5 8-5-3 5-8ZM11 3l8 5M13 15a6 6 0 1 0 9-3M6 18h9M5 25h19M18 23v2"/></svg><span>Microscope</span><small>02</small></button>
+      <button class="lab-station" type="button" data-station="incubator" aria-label="Bioenergy incubator" aria-pressed="false"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M7 4h14v21H7zM7 9h14M10 21h8M11 4V2M17 4V2"/><path d="M14 13c-4 2-3 6 0 6s4-4 0-6Z"/></svg><span>Incubator</span><small>03</small></button>
+      <button class="lab-station" type="button" data-station="atlas" aria-label="Anatomy atlas" aria-pressed="false"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M14 6C8 1 2 7 6 12c-5 5 0 12 6 10l2 3 2-3c6 2 11-5 6-10 4-5-2-11-8-6ZM14 6v16M9 8c3 1 3 4 0 5M7 17c2-2 4-1 4 2M19 8c-3 1-3 4 0 5M21 17c-2-2-4-1-4 2"/></svg><span>Anatomy</span><small>04</small></button>
+    </nav>
+
+    <nav class="lab-operations" aria-label="Laboratory activities">
+      <p class="lab-rail-caption">YOUR INSTRUMENTS</p>
+      <div class="lab-operation-grid">
+        <button type="button" data-operation="projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h7l2 2h9v13H3zM3 6V3h7l2 3"/></svg><span>Launchpad</span></button>
+        <button type="button" data-operation="supplies"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8M9 3v6L5 19a1 1 0 0 0 1 2h12a1 1 0 0 0 1-2L15 9V3M7 15h10"/></svg><span>Materials</span></button>
+        <button type="button" data-operation="design"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 14h6v6h-6zM14 7h6M17 4v6M7 14v6M4 17h6M10 7h3v10h1"/></svg><span>Design</span></button>
+        <button type="button" data-operation="workshop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5ZM3 8l9 5 9-5M12 13v9"/></svg><span>Manufacture</span></button>
+        <button type="button" data-operation="assembly"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="12" cy="19" r="3"/><path d="m7 8 4 8M17 8l-4 8M8 6h8"/></svg><span>Assemble</span></button>
+        <button type="button" data-operation="energy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 9-13h-7l1-7Z"/></svg><span>Stake &amp; LAB</span></button>
+        <button type="button" data-operation="market"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-2-6H6l-2 6ZM5 9v12h14V9M9 21v-7h6v7M4 9c0 4 4 4 4 0 0 4 4 4 4 0 0 4 4 4 4 0 0 4 4 4 4 0"/></svg><span>Market</span></button>
+        <button type="button" data-operation="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 10 5-10 5L2 8l10-5ZM3 13l9 5 9-5M3 18l9 5 9-5"/></svg><span>Specimens</span></button>
+      </div>
+      <a class="lab-classic-link" href="/test-lab#build" target="_blank" rel="noopener">Classic view <span aria-hidden="true">↗</span></a>
+    </nav>
+
+    </aside>
+
+    <section class="lab-room-heading" aria-label="Current laboratory">
+      <p class="lab-eyebrow"><span></span> YOUR LABORATORY <i>/</i> BAY 01</p>
+      <h1>A little idea. <em>A living possibility.</em></h1>
+      <p class="lab-room-caption">Four raw materials. Your design. A new form of life.</p>
+    </section>
+
+
+    <div class="lab-modebar" aria-label="Laboratory camera mode"><button type="button" data-navigation="walk" aria-pressed="true">Explore lab</button><button type="button" data-navigation="inspect" aria-pressed="false">Inspect specimen</button><button type="button" id="lab-home-view" aria-label="Return to laboratory entrance">↺ Entrance</button></div>
+    <div class="lab-movement" aria-label="Walk around the laboratory"><button type="button" data-move="forward" aria-label="Walk forward">↑</button><button type="button" data-move="left" aria-label="Walk left">←</button><button type="button" data-move="backward" aria-label="Walk backward">↓</button><button type="button" data-move="right" aria-label="Walk right">→</button></div>
+    <div class="lab-scene-label" aria-hidden="true"><span class="lab-crosshair">+</span><span>OBSERVATION CHAMBER</span><b>01—A</b></div>
+
+    <section id="lab-atlas-controls" class="lab-atlas-controls" aria-label="Anatomical specimen selection" hidden>
+      <span class="lab-control-caption">SPECIMEN LIBRARY</span>
+      <div><button type="button" data-specimen="cell">Cell</button><button type="button" data-specimen="heart">Heart</button><button type="button" data-specimen="brain">Brain</button><button type="button" data-specimen="organism">Organism</button></div>
+      <small>Anatomical form studies</small>
+    </section>
+
+    <section class="lab-specimen-hud" aria-label="Current specimen">
+      <div class="lab-specimen-index"><span class="lab-crosshair" aria-hidden="true">+</span><span id="lab-specimen-tag">MORPHOLOGY STUDY</span><i></i><span>001</span></div>
+      <h2 id="lab-specimen-title">Lumen <span>/ 001</span></h2>
+      <p id="lab-specimen-description">A new morphology, taking shape.</p>
+      <div id="lab-specimen-formula" class="lab-specimen-formula">FORM / ORGANISM</div>
+      <div class="lab-atom-legend" aria-label="Molecular atom colors"><span><i class="atom-carbon"></i>C</span><span><i class="atom-hydrogen"></i>H</span><span><i class="atom-nitrogen"></i>N</span><span><i class="atom-oxygen"></i>O</span><span><i class="atom-phosphorus"></i>P</span></div>
+    </section>
+
+    <section id="lab-experiment-progress" class="lab-experiment-progress" aria-label="Experiment stages" hidden>
+      <div data-experiment-step="select"><span>01</span>Select</div><i></i><div data-experiment-step="assemble"><span>02</span>Assemble</div><i></i><div data-experiment-step="observe"><span>03</span>Observe</div><i></i><div data-experiment-step="record"><span>04</span>Record</div>
+    </section>
+
+    <section class="lab-reagent-tray" aria-label="Reagent selection">
+      <div class="lab-tray-heading"><h2>THE ELEMENTS OF LIFE</h2><span>SELECT A REAGENT TO INSPECT <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span></div>
+      <div class="lab-reagents">
+        <button type="button" class="lab-reagent" data-reagent="glycine" aria-pressed="false"><span class="lab-reagent-index">01 <i></i></span><span class="lab-chemical-symbol lab-symbol-aa" aria-hidden="true"><svg viewBox="0 0 44 36"><path d="m9 20 12-8 13 8M21 12V4M34 20v11"/><circle cx="9" cy="20" r="4"/><circle cx="21" cy="12" r="3"/><circle cx="34" cy="20" r="4"/></svg></span><span class="lab-reagent-category">Amino acids</span><strong>Glycine</strong><span class="lab-reagent-formula">C₂H₅NO₂</span></button>
+        <button type="button" class="lab-reagent" data-reagent="atp" aria-pressed="false"><span class="lab-reagent-index">02 <i></i></span><span class="lab-chemical-symbol lab-symbol-nuc" aria-hidden="true"><svg viewBox="0 0 44 36"><path d="m5 12 9-5 9 5v10l-9 5-9-5V12Zm18 0 8-6 8 6-4 10H23M14 27v5"/><circle cx="31" cy="6" r="2"/></svg></span><span class="lab-reagent-category">Nucleotides</span><strong>ATP</strong><span class="lab-reagent-formula">C₁₀H₁₆N₅O₁₃P₃</span></button>
+        <button type="button" class="lab-reagent" data-reagent="dopc" aria-pressed="false"><span class="lab-reagent-index">03 <i></i></span><span class="lab-chemical-symbol lab-symbol-lipid" aria-hidden="true"><svg viewBox="0 0 44 36"><circle cx="22" cy="8" r="5"/><path d="m19 13-3 5 4 5-5 5 4 5M25 13l3 5-4 5 5 5-4 5"/></svg></span><span class="lab-reagent-category">Lipids</span><strong>DOPC</strong><span class="lab-reagent-formula">C₄₄H₈₄NO₈P</span></button>
+        <button type="button" class="lab-reagent" data-reagent="glucose" aria-pressed="false"><span class="lab-reagent-index">04 <i></i></span><span class="lab-chemical-symbol lab-symbol-sugar" aria-hidden="true"><svg viewBox="0 0 44 36"><path d="m11 11 11-6 11 6v13l-11 6-11-6V11ZM11 11 5 8M33 11l6-3M11 24l-6 4M33 24l6 4"/></svg></span><span class="lab-reagent-category">Sugars</span><strong>D-glucose</strong><span class="lab-reagent-formula">C₆H₁₂O₆</span></button>
+      </div>
+    </section>
+
+    <section class="lab-task-card" aria-label="Experiment action">
+      <div class="lab-task-kicker"><span class="lab-signal" aria-hidden="true"></span> YOUR NEXT STEP <span class="lab-task-number">01</span></div>
+      <h2 id="lab-task-title">Your first living creation.</h2>
+      <p id="lab-task-body">Start a local test account, get four raw materials and manufacture your first component. Every step happens here.</p>
+      <button id="lab-primary" class="lab-primary" type="button">Start local simulation <span aria-hidden="true">↗</span></button>
+      <div class="lab-secondary-actions"><button id="lab-secondary" class="lab-secondary" type="button">Inspect specimen</button><button id="lab-reset-draft" class="lab-reset" type="button" title="Clear only this visual experiment">Reset viewer</button></div>
+    </section>
+
+    <p id="lab-help" class="lab-help"><svg viewBox="0 0 16 20" aria-hidden="true"><rect x="3" y="2" width="10" height="16" rx="5"/><path d="M8 2v6"/></svg>WASD to walk <i>·</i> Drag to look <i>·</i> Click an instrument</p>
+    <div class="lab-sandbox-note"><span></span><b id="lab-mode-note">SOLANA DEVNET / TEST TOKENS</b></div>
+    <p id="lab-status" class="lab-status" role="status" aria-live="polite">Preparing a new laboratory session.</p>
+  </main>
+
+  <aside id="lab-notebook" class="lab-notebook" aria-label="Laboratory field notes" hidden>
+    <header><div><span class="lab-eyebrow">MOGUSBIO / RESEARCH</span><h2>Field notes</h2></div><button id="lab-notebook-close" class="lab-close" type="button" aria-label="Close field notes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
+    <div class="lab-notebook-tabs" role="tablist" aria-label="Field note sections"><button type="button" role="tab" data-notebook-tab="protocol" aria-selected="true">Protocol</button><button type="button" role="tab" data-notebook-tab="recipe" aria-selected="false">Recipe</button><button type="button" role="tab" data-notebook-tab="samples" aria-selected="false">Samples</button></div>
+    <div id="lab-notebook-content" class="lab-notebook-content" role="tabpanel"><p class="lab-eyebrow">A NOTE BEFORE YOU BEGIN</p><h3>Explore the laboratory.</h3><p>This is a visual experiment space. Chemical structures, anatomical studies and generated forms have different roles; your field notes keep them distinct.</p></div>
+    <footer><span>LOCAL SESSION / MODEL INSPECTOR</span><p>Your laboratory activities stay inside this room.</p></footer>
+  </aside>
+
+  <section id="lab-ops" class="lab-ops" role="dialog" aria-modal="true" aria-labelledby="lab-ops-title" aria-describedby="lab-ops-subtitle" hidden>
+    <div class="lab-ops-window">
+      <header class="lab-ops-header"><div><p class="lab-eyebrow"><span class="lab-signal" aria-hidden="true"></span> <span id="lab-ops-network">MOGUSBIO / SOLANA DEVNET</span></p><h2 id="lab-ops-title">Your laboratory</h2><p id="lab-ops-subtitle">Build, test and manage your living creations.</p></div><button id="lab-ops-close" class="lab-close" type="button" aria-label="Close laboratory activity"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
+      <nav id="lab-ops-tabs" class="lab-ops-tabs" aria-label="Activity sections"></nav>
+      <div id="lab-ops-content" class="lab-ops-content" tabindex="-1"></div>
+      <footer class="lab-ops-footer"><p id="lab-ops-status" role="status" aria-live="polite">Ready when you are.</p><span id="lab-funds-note">DEVNET TEST TOKENS · NO MAINNET FUNDS</span></footer>
+    </div>
+  </section>
+
+  <div id="lab-loading" class="lab-loading" role="status" aria-live="polite"><img class="lab-loading-logo" src="/lab-assets/mogusbio-logo.png" width="88" height="88" alt=""><p class="lab-eyebrow">MOGUSBIO · YOUR LIVING LABORATORY</p><h2>Opening your laboratory.</h2><p id="lab-loading-label">Drawing the room, laying out your instruments and opening your laboratory.</p><div class="lab-loading-track" aria-hidden="true"><span></span></div></div>
+
+  <section id="lab-fallback" class="lab-fallback" aria-label="Laboratory display alternative" hidden><span class="lab-eyebrow">LABORATORY DISPLAY</span><h2>A lighter way to build.</h2><p>The 3D room is unavailable in this browser. All laboratory activities are still available in the lightweight view.</p><div><button id="lab-fallback-action" class="lab-primary" type="button">Open lightweight laboratory <span aria-hidden="true">↗</span></button></div></section>
+</body>
+</html>

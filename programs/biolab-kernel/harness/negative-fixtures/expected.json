@@ -1,0 +1,61 @@
+{
+  "fixtureOnly": true,
+  "structurallyValid": true,
+  "entries": [
+    {
+      "file": "parent-common-cut.bin",
+      "bytes": 6145,
+      "challenge": 2000000,
+      "completedRounds": 0,
+      "failure": {
+        "code": "CUT",
+        "message": "inherited scope cut exceeded"
+      },
+      "rustCode": 8014
+    },
+    {
+      "file": "weak-muscle.bin",
+      "bytes": 6145,
+      "challenge": 2000000,
+      "completedRounds": 0,
+      "failure": {
+        "code": "MECHANICAL",
+        "message": "real muscle work not funded"
+      },
+      "rustCode": 8016
+    },
+    {
+      "file": "missing-sensor-boost.bin",
+      "bytes": 6145,
+      "challenge": 2000000,
+      "completedRounds": 0,
+      "failure": {
+        "code": "CONTROL",
+        "message": "downstream boost exceeds real sensor/integrator service"
+      },
+      "rustCode": 8004
+    },
+    {
+      "file": "partial-nonintegral.bin",
+      "bytes": 324,
+      "challenge": 1001000,
+      "completedRounds": 0,
+      "failure": {
+        "code": "INTEGER",
+        "message": "non-integral branch flow"
+      },
+      "rustCode": 8001
+    },
+    {
+      "file": "unbalanced-source-quality.bin",
+      "bytes": 6145,
+      "challenge": 2000000,
+      "completedRounds": 73,
+      "failure": {
+        "code": "QUALITY",
+        "message": "worst actual quality below requested challenge"
+      },
+      "rustCode": 8019
+    }
+  ]
+}

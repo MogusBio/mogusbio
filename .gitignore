@@ -1,0 +1,8 @@
+.local-tools/
+node_modules/
+target/
+.data/
+coverage/
+*.log
+.env
+

@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:biolab:BIOP0R2:production-input",
+  "title": "Public production release input; never private keys",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "wireVersion",
+    "programId",
+    "bootstrap",
+    "opsMembers",
+    "genesisHash",
+    "deploymentNonce",
+    "releaseHash",
+    "abiHash",
+    "ruleHash",
+    "validatorHash",
+    "catalogHash",
+    "initialSeedSetId",
+    "taskManifestHash",
+    "taskFaultPolicyHash",
+    "admissionPolicyHash",
+    "networkProfileHash",
+    "seedCount",
+    "frontier",
+    "initNotBefore",
+    "seedOpen",
+    "rewardStart",
+    "prewarmSeconds",
+    "maxClockSkewSeconds",
+    "loaderProgram",
+    "programDataAddress",
+    "upgradeAuthority"
+  ],
+  "properties": {
+    "profile": {
+      "const": "BIOP0R2"
+    },
+    "wireVersion": {
+      "const": 2
+    },
+    "programId": {
+      "$ref": "#/$defs/publicKey"
+    },
+    "bootstrap": {
+      "$ref": "#/$defs/publicKey"
+    },
+    "opsMembers": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/publicKey"
+      }
+    },
+    "genesisHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "deploymentNonce": {
+      "$ref": "#/$defs/hex32"
+    },
+    "releaseHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "abiHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "ruleHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "validatorHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "catalogHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "initialSeedSetId": {
+      "$ref": "#/$defs/hex32"
+    },
+    "taskManifestHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "taskFaultPolicyHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "admissionPolicyHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "networkProfileHash": {
+      "$ref": "#/$defs/hex32"
+    },
+    "seedCount": {
+      "const": 16,
+      "description": "Required16 bitmap commitment remains fixed; OPEN310 additionally needs public C310 or a genuinely better warm K0 before sealing."
+    },
+    "frontier": {
+      "const": 310
+    },
+    "initNotBefore": {
+      "$ref": "#/$defs/unixI64"
+    },
+    "seedOpen": {
+      "$ref": "#/$defs/unixI64"
+    },
+    "rewardStart": {
+      "$ref": "#/$defs/unixI64"
+    },
+    "prewarmSeconds": {
+      "const": 86400
+    },
+    "maxClockSkewSeconds": {
+      "const": 0
+    },
+    "loaderProgram": {
+      "const": "BPFLoaderUpgradeab1e11111111111111111111111"
+    },
+    "programDataAddress": {
+      "$ref": "#/$defs/publicKey"
+    },
+    "upgradeAuthority": {
+      "type": "null"
+    }
+  },
+  "$defs": {
+    "publicKey": {
+      "type": "string",
+      "minLength": 32,
+      "maxLength": 44,
+      "pattern": "^[1-9A-HJ-NP-Za-km-z]+$"
+    },
+    "hex32": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "unixI64": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+[package]
+name="biolab-provenance-harness"
+version="0.1.0"
+edition="2021"
+publish=false
+[workspace]
+[dependencies]
+mollusk-svm="=0.16.2"
+solana-account="4"
+solana-instruction="3"
+solana-pubkey="4"

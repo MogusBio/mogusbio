@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "release": "FUNC2R2",
+  "productionAdmission": false,
+  "suite": 2,
+  "fixture": 1,
+  "load": 1,
+  "witnessBytes": 2271,
+  "ruleHash": "ebee12f848579d8316d795b2e6f43479dcb115ad92b513c4aac091a80d7b3b74",
+  "validatorHash": "2ff0b0b6344c186e10090325117a7a0e9e5faedaaec5913d460831b8e6b730a0",
+  "rules": [
+    {
+      "path": "releases/func2/normative/p6-structure1-20261024/01-graph-codec.md",
+      "bytes": 25069,
+      "sha256": "1d859c9774ea08cb058941f97a88eae15286056e0abe4667c6792a254253dfc5"
+    },
+    {
+      "path": "releases/func2/normative/p6-structure1-20261024/02-ports-capacity-and-closure.md",
+      "bytes": 16586,
+      "sha256": "999326952f96bf7ac543f73b43e122d1f9b43a931ca338e6c7dafadd752a6f11"
+    },
+    {
+      "path": "releases/func2/normative/rollup1-20261024/01-function-semantics.md",
+      "bytes": 17280,
+      "sha256": "a251aee2aa859c5940d7e91cbb57f5a7e48e8873092852e86fce6340d766ca5a"
+    },
+    {
+      "path": "releases/func2/normative/rollup1-20261024/02-function-codec.md",
+      "bytes": 21037,
+      "sha256": "13fb10da146ccb37b18847491ba08ea08b9b6fa2c11a8257c9ed1c60823d59a1"
+    },
+    {
+      "path": "releases/func2/normative/rollup1-20261024/03-function-cases.md",
+      "bytes": 14664,
+      "sha256": "48c5a937b00c8e68de41445892e1eb19a6b350935f7eb5a4b4f9b36300b3ae86"
+    },
+    {
+      "path": "releases/func2/normative/rollup1-20261024/07-semantic-canonical.md",
+      "bytes": 9948,
+      "sha256": "48dcde3cbb47d1b92907390cab19483263cc5fd1f82c49a63e72d777a512f155"
+    },
+    {
+      "path": "releases/func2/normative/FUNC2.md",
+      "bytes": 2642,
+      "sha256": "d338cc477a9e6481d196c1e45368a2e2c82d05ce8f352aa41a240d6f225ea7e6"
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/biology/src/graph.mjs",
+      "bytes": 13822,
+      "sha256": "50e6b688e5eb4fc2576ebd5431ae2e79e27f3d9758b8ba2ee2441a592c9222ec"
+    },
+    {
+      "path": "packages/biology/src/runtime.mjs",
+      "bytes": 15106,
+      "sha256": "2225351614e86a5c5e9e8e903baaf80ef2d24e65750114c2a7d686885236e4a5"
+    },
+    {
+      "path": "packages/biology/src/evidence.mjs",
+      "bytes": 3008,
+      "sha256": "32b74ace4a5a3143c222a6c166489a632cbde0240cb65ef02142482533736462"
+    },
+    {
+      "path": "packages/biology/src/canonical.mjs",
+      "bytes": 2169,
+      "sha256": "ebbfa96fb158d736d5f7ab8000489e660c32d92cf52c4b8ff920483e32aa4095"
+    },
+    {
+      "path": "programs/biolab-kernel/src/graph.rs",
+      "bytes": 38493,
+      "sha256": "ad90d6b5379e1ddce7a7125760e92c2b4c484cd06b611645286a754da4e3b42a"
+    },
+    {
+      "path": "programs/biolab-kernel/src/runtime.rs",
+      "bytes": 21726,
+      "sha256": "39a37c6e06016c7548d88d7e4873bd67d1b60910b3401aa1bc136b23aca376cd"
+    },
+    {
+      "path": "programs/biolab-kernel/Cargo.lock",
+      "bytes": 41445,
+      "sha256": "b074a94f5ce972afccf4ef9d98d2f9fe1bc467323f3162f85cdadb530bdc61e8"
+    }
+  ],
+  "snapshots": [
+    {
+      "livePath": "packages/biology/src/graph.mjs",
+      "path": "releases/func2r2/sources/packages/biology/src/graph.mjs",
+      "bytes": 13822,
+      "sha256": "50e6b688e5eb4fc2576ebd5431ae2e79e27f3d9758b8ba2ee2441a592c9222ec"
+    },
+    {
+      "livePath": "packages/biology/src/runtime.mjs",
+      "path": "releases/func2r2/sources/packages/biology/src/runtime.mjs",
+      "bytes": 15106,
+      "sha256": "2225351614e86a5c5e9e8e903baaf80ef2d24e65750114c2a7d686885236e4a5"
+    },
+    {
+      "livePath": "packages/biology/src/evidence.mjs",
+      "path": "releases/func2r2/sources/packages/biology/src/evidence.mjs",
+      "bytes": 3008,
+      "sha256": "32b74ace4a5a3143c222a6c166489a632cbde0240cb65ef02142482533736462"
+    },
+    {
+      "livePath": "packages/biology/src/canonical.mjs",
+      "path": "releases/func2r2/sources/packages/biology/src/canonical.mjs",
+      "bytes": 2169,
+      "sha256": "ebbfa96fb158d736d5f7ab8000489e660c32d92cf52c4b8ff920483e32aa4095"
+    },
+    {
+      "livePath": "programs/biolab-kernel/src/graph.rs",
+      "path": "releases/func2r2/sources/programs/biolab-kernel/src/graph.rs",
+      "bytes": 38493,
+      "sha256": "ad90d6b5379e1ddce7a7125760e92c2b4c484cd06b611645286a754da4e3b42a"
+    },
+    {
+      "livePath": "programs/biolab-kernel/src/runtime.rs",
+      "path": "releases/func2r2/sources/programs/biolab-kernel/src/runtime.rs",
+      "bytes": 21726,
+      "sha256": "39a37c6e06016c7548d88d7e4873bd67d1b60910b3401aa1bc136b23aca376cd"
+    },
+    {
+      "livePath": "programs/biolab-kernel/Cargo.lock",
+      "path": "releases/func2r2/sources/programs/biolab-kernel/Cargo.lock",
+      "bytes": 41445,
+      "sha256": "b074a94f5ce972afccf4ef9d98d2f9fe1bc467323f3162f85cdadb530bdc61e8"
+    }
+  ]
+}
