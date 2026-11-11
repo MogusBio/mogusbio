@@ -2,7 +2,7 @@
 
 This is the original MogusBio protocol with its native Solana programs, laboratory application, and tests. The source is from the frozen October 26, 2026 Devnet release candidate.
 
-The candidate passed the archived local test run with 1,367 tests. The archived build was prepared for Solana Devnet. A Devnet deployment and live business transactions were still pending at that checkpoint.
+The archived local test run passed 1,367 tests.
 
 The source includes the laboratory and player client, native Rust/SBF programs, verification models, manufacturing and composition, staking and LAB settlement, marketplace operations, specifications, and dependency locks.
 

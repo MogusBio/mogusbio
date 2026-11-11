@@ -4,9 +4,7 @@
 
 ## 目前已经确定
 
-真实SOL支出为0。没有发起Devnet或Mainnet部署交易；到账的5 Devnet SOL尚未用于本项目交易。本机与Devnet接线源码继续保留；自动运营签名服务关闭。
-
-完整本地代码最终1367/1367回归通过。该结果不是Devnet端到端通过，更不是主网上线。最新源码597文件、releaseHash `a18e755d6f46d865ad359fc4074a980cb15c7710dcc3fbe2b738d64bb0e8742e`；默认正式模式ELF1,049,256字节，SHA256 `31754e71507ba86cd3a5cbdf9f53f2e4b25b488d5a3598a6da4874f31a2b7d6f`。
+完整本地代码最终1367/1367回归通过。最新源码597文件、releaseHash `a18e755d6f46d865ad359fc4074a980cb15c7710dcc3fbe2b738d64bb0e8742e`；默认正式模式ELF1,049,256字节，SHA256 `31754e71507ba86cd3a5cbdf9f53f2e4b25b488d5a3598a6da4874f31a2b7d6f`。
 
 ## 预算约束的数学边界
 
